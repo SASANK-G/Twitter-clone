@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+    html{
+        ::-webkit-scrollbar:none;
+    }
+
     body{
         @apply bg-black;
     }

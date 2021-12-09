@@ -86,6 +86,7 @@ function Input() {
     return (
         <div className={`border-b border-gray-800 p-2 flex space-x-3
                         overflow-y-scroll scrollbar-hide ${loading && "opacity-60"}`}>
+                            
             <img src="" alt="" className="rounded-full cursor-pointer h-11 w-11 "/>
             <div className="w-full divide-y divide-gray-700">
                 <div className={`${selectedFile && "pb-7"} ${input && "space-y-2.5"}`}>

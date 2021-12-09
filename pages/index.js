@@ -24,6 +24,7 @@ export default function Home({trendingResults, followResults, providers}) {
         <Sidebar/>
         {/* Feed */}
         <Feed/>
+        
         {/* widgets */}
 
         {/* Modal */}
@@ -40,7 +41,7 @@ export async function getServerSideProps(context){
     (res) => res.json()
   );
   const providers = await getProviders();
-  const session = await getSession(context);
+  const session = await getSession(context);//server side rendering
 
   return {
     props: {

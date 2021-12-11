@@ -57,6 +57,8 @@ export default function Post({id, post, postPage}) {
         [db, id]
     );
     
+
+    //fetch likes
     useEffect(
         () =>
             onSnapshot(collection(db, "posts", id, "likes"), (snapshot) =>
@@ -64,7 +66,6 @@ export default function Post({id, post, postPage}) {
             ),
         [db, id]
     );
-
 
 
     // add likes to firestore

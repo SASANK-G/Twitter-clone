@@ -1,4 +1,4 @@
-import { async } from '@firebase/util'
+
 import Head from 'next/head'
 import Feed from '../components/Feed'
 import Sidebar from '../components/Sidebar'
@@ -6,7 +6,7 @@ import { getProviders, getSession, useSession } from "next-auth/react";
 import Login from '../components/Login';
 import Modal from '../components/Modal';
 import { useRecoilState } from "recoil";
-import { modalState, postIdState } from "../atoms/modalAtom";
+import { modalState} from "../atoms/modalAtom";
 
 export default function Home({trendingResults, followResults, providers}) {
 

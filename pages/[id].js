@@ -16,7 +16,7 @@ import {
   import Post from "../components/Post";
   import { db } from "../firebase";
   import { ArrowLeftIcon } from "@heroicons/react/solid";
-
+  import Comment from "../components/Comment";
   import Head from "next/head";
 
 
@@ -88,7 +88,7 @@ export default function PostPage({ trendingResults, followResults, providers }){
                 </div>
               )}
             </div>
-          
+           
     
             {isOpen && <Modal />}
           </main>

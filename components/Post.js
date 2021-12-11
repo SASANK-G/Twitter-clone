@@ -45,9 +45,54 @@ export default function Post({id, post, postPage}) {
 
 
 
+    useEffect(
+        () =>
+          onSnapshot(
+            query(
+              collection(db, "posts", id, "comments"),
+              orderBy("timestamp", "desc")
+            ),
+            (snapshot) => setComments(snapshot.docs)
+          ),
+        [db, id]
+    );
+    
+    useEffect(
+        () =>
+            onSnapshot(collection(db, "posts", id, "likes"), (snapshot) =>
+            setLikes(snapshot.docs)
+            ),
+        [db, id]
+    );
+
+
+
+    // add likes to firestore
+    useEffect(
+        () =>
+          setLiked(
+            likes.findIndex((like) => like.id === session?.user?.uid) !== -1
+          ),
+        [likes]
+    );
+
+
+    //like, dislike
+    const likePost = async () => {
+        if (liked) {
+          await deleteDoc(doc(db, "posts", id, "likes", session.user.uid));
+        } else {
+          await setDoc(doc(db, "posts", id, "likes", session.user.uid), {
+            username: session.user.name,
+          });
+        }
+    };
+
+
+
     return (
         <div className='flex p-3 border-b border-gray-800 cursor-pointer'
-         
+         onClick={() => router.push(`/${id}`)}
         >
             {!postPage && (
                 <img src={post?.userImg} className='mr-4 rounded-full h-11 w-11'/>

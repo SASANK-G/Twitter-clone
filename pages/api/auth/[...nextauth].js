@@ -12,13 +12,16 @@ export default NextAuth({
   ],
 
   //to manipulate
-  callbacks:{
-      async session({session, token}){
-          session.user.tag=session.user.name.split(" ").join("").toLocaleLowerCase();
+  callbacks: {
+    async session({ session, token }) {
+      session.user.tag = session.user.name
+        .split(" ")
+        .join("")
+        .toLocaleLowerCase();
 
-          session.user.uid=token.sub;
-          return session;
-      },
-
+      session.user.uid = token.sub;
+      return session;
+    },
   },
-})
+  secret: process.env.JWT_SECRET
+});

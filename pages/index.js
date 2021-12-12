@@ -7,6 +7,7 @@ import Login from '../components/Login';
 import Modal from '../components/Modal';
 import { useRecoilState } from "recoil";
 import { modalState} from "../atoms/modalAtom";
+import Widgets from '../components/Widgets';
 
 export default function Home({trendingResults, followResults, providers}) {
 
@@ -29,6 +30,10 @@ export default function Home({trendingResults, followResults, providers}) {
         <Feed/>
         
         {/* widgets */}
+        <Widgets
+          trendingResults={trendingResults}
+          followResults={followResults}
+        />
 
         {/* Modal */}
         {isOpen && <Modal/>}

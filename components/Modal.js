@@ -29,14 +29,14 @@ export default function Modal() {
   const [comment, setComment] = useState("");
   const router = useRouter();
 
-  useEffect(
-    () =>
-      onSnapshot(doc(db, "posts", postId), (snapshot) => {
-        setPost(snapshot.data());
-      }),
-    [db]
-  );
+  useEffect(() => onSnapshot(doc(db, "posts", postId), (snapshot)=>{
+    setPost(snapshot.data());
 
+  }) 
+    
+    [input]
+  );
+      
   const sendComment = async (e) => {
     e.preventDefault();
 

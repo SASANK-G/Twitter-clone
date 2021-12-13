@@ -34,7 +34,7 @@ export default function Modal() {
 
   }) 
     
-    [input]
+    [db]
   );
       
   const sendComment = async (e) => {

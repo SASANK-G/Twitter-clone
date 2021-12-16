@@ -88,15 +88,16 @@ export default function Post({id, post, postPage}) {
           });
         }
     };
-
+    
 
 
     return (
-        <div className='flex p-3 border-b border-gray-800 cursor-pointer'
+        <div className='flex p-3 border-b border-gray-800 cursor-pointer scrollbar-hide'
          onClick={() => router.push(`/${id}`)}
         >
             {!postPage && (
-                <img src={post?.userImg} className='mr-4 rounded-full h-11 w-11'/>
+                <img src={post.userImg} className='mr-4 rounded-full h-11 w-11'/>
+                
             )}
             <div className='flex flex-col w-full space-y-2'>
                 {/* post-top-Section */}

@@ -5,9 +5,57 @@ import {
     HeartIcon,
     ShareIcon,
   } from "@heroicons/react/outline";
-  import Moment from "react-moment";
+  import {
+    collection,
+    deleteDoc,
+    doc,
+    onSnapshot,
+    orderBy,
+    query,
+    setDoc,
+  } from "@firebase/firestore";
+import { useEffect, useState } from "react";
+import Moment from "react-moment";
+import { db } from "../firebase";
+import { useSession } from "next-auth/react";
   
-  function Comment({ comment }) {
+  function Comment({ comment, id }) {
+    const { data: session } = useSession();
+    const [likes, setLikes] = useState([]);
+    const [liked, setLiked] = useState(false);
+
+    //fetch likes
+    useEffect(
+      () =>
+          onSnapshot(collection(db, "posts", id, "likes"), (snapshot) =>
+          setLikes(snapshot.docs)
+          ),
+      [db, id]
+    );
+
+
+    // add likes to firestore
+    useEffect(
+        () =>
+          setLiked(
+            likes.findIndex((like) => like.id === session?.user?.uid) !== -1
+          ),
+        [likes]
+    );
+
+
+    //like, dislike
+    const likePost = async () => {
+        if (liked) {
+          await deleteDoc(doc(db, "posts", id, "likes", session.user.uid));
+        } else {
+          await setDoc(doc(db, "posts", id, "likes", session.user.uid), {
+            username: session.user.name,
+          });
+        }
+    };
+
+
     return (
       <div className="flex p-3 border-b border-gray-700 cursor-pointer">
         <img
@@ -39,16 +87,28 @@ import {
             </div>
           </div>
   
-          <div className="text-[#6e767d] flex justify-between w-10/12">
+          <div className="text-[#6e767d] flex justify-between w-10/12 scrollbar-hide">
             <div className="icon group">
               <ChatIcon className="h-5 group-hover:text-[#1d9bf0]" />
             </div>
   
-            <div className="flex items-center space-x-1 group">
+            <div className="flex items-center space-x-1 group"
+            onClick={(e) => {
+              e.stopPropagation();
+              likePost();
+              }}
+            >
               <div className="icon group-hover:bg-pink-600/10">
                 <HeartIcon className="h-5 group-hover:text-pink-600" />
               </div>
-              <span className="text-sm group-hover:text-pink-600"></span>
+              {likes.length > 0 && (
+                  <span className={`group-hover:text-pink-600 text-sm 
+                      ${liked && "text-pink-600"
+                      }`}
+                  >
+                      {likes.length}
+                  </span>
+              )}
             </div>
   
             <div className="icon group">
